@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora ThinkLab | PDF ბიბლიოთეკა</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Header logo styling */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo-image {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+        
+        .header-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            margin: 0;
+        }
+        
+        .tagline {
+            font-size: 0.8rem;
+            color: #d4af37;
+            letter-spacing: 1px;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        /* Footer logo styling */
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo-image {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+        
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.4rem;
+            margin: 0;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .footer-tagline {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            
+            .footer-logo {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+            }
+            
+            .footer-logo h3 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="header-logo-image">
+                    <img src="Agora_ThinkLab.png" alt="Agora ThinkLab Logo">
+                </div>
+                <div>
+                    <h1>Agora ThinkLab</h1>
+                    <p class="tagline">იფიქრე | იმოქმედე | შექმენი</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">მთავარი</a></li>
+                    <li><a href="articles.html">სტატიები</a></li>
+                    <li><a href="podcasts.html">პოდკასტები</a></li>
+                    <li><a href="uploads.html" class="active">ბიბლიოთეკა</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h2>ციფრული ბიბლიოთეკა</h2>
+                <p>დაათვალიერეთ და გადმოიწერეთ PDF რესურსები.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <div class="library-section">
+                    <div class="pdf-list" id="pdfList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="footer-logo-image">
+                        <img src="Agora_ThinkLab.png" alt="Agora ThinkLab Logo">
+                    </div>
+                    <div>
+                        <h3>Agora ThinkLab</h3>
+                        <p class="footer-tagline">აგორა ფიქრის ლაბორატორია</p>
+                    </div>
+                </div>
+                
+                <div class="footer-social">
+                    <a href="https://linktr.ee/AgoraThinkLab" target="_blank" class="linktree-link">
+                        <svg class="linktree-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+                            <path d="M12 6v6l4 2M12 6L8 8l4 2M12 6l4 2-4 2" stroke="#d4af37" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            <path d="M12 12l-4 2 4 2 4-2-4-2z" stroke="#d4af37" stroke-width="1.5" fill="none"/>
+                            <path d="M12 16v2" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <span>ჩვენი ლინკები</span>
+                    </a>
+                </div>
+                
+                <p class="copyright">&copy; Agora ThinkLab. All rights reserved.</p>
+                <p class="admin-link">
+                    <a href="login.html" class="admin-access">🔒 Admin Access</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

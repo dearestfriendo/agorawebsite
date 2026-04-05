@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora ThinkLab | Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header styling */
+        .admin-header {
+            background: #000000;
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo-image {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .header-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .logo h2 {
+            font-size: 1.5rem;
+            color: white;
+            margin: 0;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .logout-btn:hover {
+            background: #d4af37;
+            color: #000000;
+            border-color: #d4af37;
+        }
+        
+        /* Tabs */
+        .admin-tabs {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 24px;
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+        
+        .tab-buttons {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            padding: 16px 28px;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        
+        .tab-btn.active {
+            color: #d4af37;
+            border-bottom: 3px solid #d4af37;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 48px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Cards */
+        .admin-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #000000;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        
+        .btn-primary {
+            background: #000000;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #d4af37;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+        
+        .items-list {
+            margin-top: 24px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .admin-item {
+            background: #fafaf8;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+            border: 1px solid #eee;
+        }
+        
+        .admin-item-info {
+            flex: 1;
+        }
+        
+        .admin-item-info h4 {
+            margin-bottom: 8px;
+            color: #000000;
+            font-size: 1.1rem;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .edit-btn, .delete-btn, .view-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .edit-btn {
+            background: #f0f0f0;
+            color: #000000;
+        }
+        
+        .edit-btn:hover {
+            background: #d4af37;
+            color: #000000;
+        }
+        
+        .delete-btn {
+            background: #fee;
+            color: #d4af37;
+        }
+        
+        .delete-btn:hover {
+            background: #fdd;
+            color: #b8860b;
+        }
+        
+        .view-btn {
+            background: #000000;
+            color: white;
+        }
+        
+        .view-btn:hover {
+            background: #d4af37;
+            color: #000000;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: #000000;
+            color: #888;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            text-align: center;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo-image {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .footer-logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .footer-tagline {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .copyright {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-nav {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-logo {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="container">
+            <div class="admin-nav">
+                <div class="logo">
+                    <div class="header-logo-image">
+                        <img src="Agora_ThinkLab.png" alt="Agora ThinkLab Logo">
+                    </div>
+                    <h2>Agora ThinkLab · Admin</h2>
+                </div>
+                <div class="user-info">
+                    <span><i class="fas fa-user-shield"></i> <span id="adminUsername"></span></span>
+                    <a href="logout.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-tabs">
+        <div class="tab-buttons">
+            <button class="tab-btn active" data-tab="articles-tab"><i class="fas fa-newspaper"></i> Articles</button>
+            <button class="tab-btn" data-tab="podcasts-tab"><i class="fas fa-podcast"></i> Podcasts</button>
+            <button class="tab-btn" data-tab="pdfs-tab"><i class="fas fa-file-pdf"></i> PDF Library</button>
+        </div>
+    </div>
+
+    <div id="articles-tab" class="tab-content active">
+        <div class="admin-card">
+            <h3><i class="fas fa-plus-circle"></i> Create / Edit Article</h3>
+            <div id="articleSuccess" class="success-message"></div>
+            <form id="adminArticleForm">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="adminArticleTitle" required placeholder="Enter article title...">
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" id="adminArticleAuthor" placeholder="Your name or pen name">
+                </div>
+                <div class="form-group">
+                    <label>Short Excerpt *</label>
+                    <textarea id="adminArticleExcerpt" rows="3" required placeholder="A brief summary..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Full Content (HTML supported)</label>
+                    <textarea id="adminArticleContent" rows="15" placeholder="Write your article here...
+Use HTML tags for formatting:
+&lt;p&gt;Your paragraph here&lt;/p&gt;
+&lt;h2&gt;Section Heading&lt;/h2&gt;
+&lt;br&gt;New Line
+&lt;blockquote&gt;A quote&lt;/blockquote&gt;"></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Publish Article</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h3><i class="fas fa-edit"></i> Manage Articles</h3>
+            <div id="adminArticlesList" class="items-list"></div>
+        </div>
+    </div>
+
+    <div id="podcasts-tab" class="tab-content">
+        <div class="admin-card">
+            <h3><i class="fas fa-plus-circle"></i> Add Podcast Episode</h3>
+            <div id="podcastSuccess" class="success-message"></div>
+            <form id="adminPodcastForm">
+                <div class="form-group">
+                    <label>Episode Title *</label>
+                    <input type="text" id="adminEpisodeTitle" required placeholder="Episode title...">
+                </div>
+                <div class="form-group">
+                    <label>Episode Number</label>
+                    <input type="text" id="adminEpisodeNumber" placeholder="#42 (optional)">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="adminEpisodeDescription" rows="3" placeholder="Brief description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>YouTube URL *</label>
+                    <input type="url" id="adminYoutubeUrl" required placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+                <button type="submit" class="btn-primary">Add Episode</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h3><i class="fas fa-list"></i> Manage Episodes</h3>
+            <div id="adminPodcastsList" class="items-list"></div>
+        </div>
+    </div>
+
+    <!-- PDFs Tab -->
+    <div id="pdfs-tab" class="tab-content">
+        <div class="admin-card">
+            <h3><i class="fas fa-cloud-upload-alt"></i> Upload PDF</h3>
+            <div id="pdfSuccess" class="success-message"></div>
+            <div id="pdfError" class="error-message"></div>
+            <form id="adminPdfForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Document Title *</label>
+                    <input type="text" id="adminPdfTitle" required placeholder="Document title...">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="adminPdfDescription" rows="2" placeholder="Brief description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>PDF File * (Max 15MB)</label>
+                    <input type="file" id="adminPdfFile" accept=".pdf" required>
+                </div>
+                <button type="submit" class="btn-primary"><i class="fas fa-upload"></i> Upload PDF</button>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h3><i class="fas fa-database"></i> Manage PDFs</h3>
+            <div id="adminPdfsList" class="items-list"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="footer-logo-image">
+                        <img src="Agora_ThinkLab.png" alt="Agora ThinkLab Logo">
+                    </div>
+                    <div>
+                        <h3>Agora ThinkLab</h3>
+                        <p class="footer-tagline">აგორა ფიქრის ლაბორატორია</p>
+                    </div>
+                </div>
+                <p class="copyright">&copy; Agora ThinkLab. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="admin.js"></script>
+    <script>
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+        document.getElementById('adminUsername').textContent = sessionStorage.getItem('adminUsername') || 'Admin';
+    </script>
+</body>
+</html>
